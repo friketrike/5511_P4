@@ -28,10 +28,10 @@ public class CompareSortingAlgos {
 			qSortCounter.put(set,new SortingCounter());
 		
 		for(dataSets set : dataSets.values())
-			SortingAlgorithms.selectSort(dataSetCopy.d.get(set), selectSortCounter.get(set));
+			SortingAlgorithms.insSort(dataSetCopy.d.get(set), insSortCounter.get(set));
 		dataSetCopy.clone(dataSet);
 		for(dataSets set : dataSets.values())
-			SortingAlgorithms.insSort(dataSetCopy.d.get(set), insSortCounter.get(set));
+			SortingAlgorithms.selectSort(dataSetCopy.d.get(set), selectSortCounter.get(set));
 		dataSetCopy.clone(dataSet);
 		for(dataSets set : dataSets.values())
 			SortingAlgorithms.heapSort(dataSetCopy.d.get(set), heapSortCounter.get(set));
@@ -43,6 +43,7 @@ public class CompareSortingAlgos {
 		for(dataSets set : dataSets.values())
 			SortingAlgorithms.mergeSort(dataSetCopy.d.get(set), dataSet.d.get(set), 
 					0, dataSetCopy.d.get(set).length-1, mergeSortCounter.get(set));
+		
 		// nice formatting idea from 
 		// http://stackoverflow.com/questions/18672643/how-to-print-a-table-of-information-in-java
 		final Object[][] table = new String[6][];
@@ -54,7 +55,9 @@ public class CompareSortingAlgos {
 		table[3][0] = "Heap";
 		table[4][0] = "Merge";
 		table[5][0] = "Quick";
+		
 		int i = 0;
+		
 		for (dataSets set : dataSets.values())
 		{
 			++i;
@@ -64,6 +67,7 @@ public class CompareSortingAlgos {
 			table[4][i] = mergeSortCounter.get(set).toString();
 			table[5][i] = qSortCounter.get(set).toString();
 		}
+		
 		for (final Object[] row : table) {
 		    System.out.format("%-7s%-11s%-15s%-19s%-19s%-19s\n", row);
 		}

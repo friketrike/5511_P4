@@ -4,17 +4,23 @@ import java.util.EnumMap;
 enum dataSets{ A, B, C, D, E }
 
 public class SortTestDataSet {
-	
+		
 	public EnumMap<dataSets, Integer[]> d = new EnumMap<>(dataSets.class);
+	
+	private final int ASIZE = 100;		// 100 random numbers
+	private final int BSIZE = 1000;		// 1000 random numbers
+	private final int CSIZE = 10000;	// 10000 random numbers
+	private final int DSIZE = 10000;	// 10000 to 1 in desc order
+	private final int ESIZE = 10000;	// 1:9999 ; 2:10000 both step 2
 	
 	public SortTestDataSet(){
 		allocateArrays();
 		Random randomGen = new Random();
-		for(int i=0; i<d.get(dataSets.A).length; i++)
+		for(int i=0; i<ASIZE; i++)
 			d.get(dataSets.A)[i] = randomGen.nextInt();
-		for(int i=0; i<d.get(dataSets.B).length; i++)
+		for(int i=0; i<BSIZE; i++)
 			d.get(dataSets.B)[i] = randomGen.nextInt();
-		for(int i=0; i<d.get(dataSets.C).length; i++)
+		for(int i=0; i<CSIZE; i++)
 			d.get(dataSets.C)[i] = randomGen.nextInt();
 		resetDE();
 	}
@@ -27,20 +33,20 @@ public class SortTestDataSet {
 	}
 	
 	private void allocateArrays(){
-		d.put(dataSets.A, new Integer[100]);	// 100 random numbers
-		d.put(dataSets.B, new Integer[1000]);	// 1000 random numbers
-		d.put(dataSets.C, new Integer[10000]);	// 10000 random numbers
-		d.put(dataSets.D, new Integer[10000]);	// 10000 to 1 in desc order
-		d.put(dataSets.E, new Integer[10000]);	// 1:9999 ; 2:10000 both step 2
+		d.put(dataSets.A, new Integer[ASIZE]);	
+		d.put(dataSets.B, new Integer[BSIZE]);	
+		d.put(dataSets.C, new Integer[CSIZE]);	
+		d.put(dataSets.D, new Integer[DSIZE]);	
+		d.put(dataSets.E, new Integer[ESIZE]);	
 	}
 	
 	public void clone(SortTestDataSet toBeCopied)
 	{
-		for(int i=0; i<d.get(dataSets.A).length; i++)
+		for(int i=0; i<ASIZE; i++)
 			d.get(dataSets.A)[i] = toBeCopied.d.get(dataSets.A)[i];
-		for(int i=0; i<d.get(dataSets.B).length; i++)
+		for(int i=0; i<BSIZE; i++)
 			d.get(dataSets.B)[i] = toBeCopied.d.get(dataSets.B)[i];
-		for(int i=0; i<d.get(dataSets.C).length; i++)
+		for(int i=0; i<CSIZE; i++)
 			d.get(dataSets.C)[i] = toBeCopied.d.get(dataSets.C)[i];
 		resetDE();
 	}
@@ -48,13 +54,13 @@ public class SortTestDataSet {
 	private void resetDE(){
 		/* these two arrays will always be the same, 
 		set them up on allocation*/
-		for(int i=0; i < 10000; i++)
-			d.get(dataSets.D)[i] = (10000 - i);
+		for(int i=0; i < DSIZE; i++)
+			d.get(dataSets.D)[i] = (DSIZE - i);
 		
-		for(int i=0; i < 5000; i++)
+		for(int i=0; i < ESIZE/2; i++)
 		{
 			d.get(dataSets.E)[i] = 2*(i) + 1;
-			d.get(dataSets.E)[10000-(i+1)] = 2*(i) + 2;
+			d.get(dataSets.E)[ESIZE-(i+1)] = 2*(i) + 2;
 		}
 	}
 

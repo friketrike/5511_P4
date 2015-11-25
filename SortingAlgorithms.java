@@ -1,6 +1,20 @@
 
 public class SortingAlgorithms {
 	
+	static <E extends Comparable<? super E>>
+	void insSort(E[] A, SortingCounter count) {
+	  for (int i=1; i<A.length; i++){ // Insert i'th record
+		int temp = i;
+	    for (int j=i; (j>0) && (A[j].compareTo(A[j-1])<0); j--, temp--){
+	      count.c++;	
+	      DSutil.swap(A, j, j-1);
+	      count.s++;
+	    }
+	    // we didn't break the loop because of j, so we did compare keys
+	    if (temp > 0) count.c++;
+	  }
+	}
+	
 	// SelectSort
 	static <E extends Comparable<? super E>>
 	void selectSort(E[] A, SortingCounter count) {
@@ -15,19 +29,6 @@ public class SortingAlgorithms {
 			DSutil.swap(A, i, lowindex);
 		}
 
-	}
-	
-	static <E extends Comparable<? super E>>
-	void insSort(E[] A, SortingCounter count) {
-	  for (int i=1; i<A.length; i++){ // Insert i'th record
-		int temp = i;
-	    for (int j=i; (j>0) && (A[j].compareTo(A[j-1])<0); j--, temp--){
-	      count.c++;	
-	      DSutil.swap(A, j, j-1);
-	      count.s++;
-	    }
-	    if (temp > 0) count.c++;
-	  }
 	}
 	
 	static <E extends Comparable<? super E>>
@@ -48,7 +49,7 @@ public class SortingAlgorithms {
 		mergeSort(A, temp, mid+1, r, count); // Mergesort second half
 		for (int i=l; i<=r; i++){ // Copy subarray to temp
 			temp[i] = A[i];
-			count.s++;// TODO does the copy count as a swap?
+			/*count.s++; -- copying the data does not count as swap*/
 		}
 		// Do the merge operation back to A
 		int i1 = l; int i2 = mid + 1;
