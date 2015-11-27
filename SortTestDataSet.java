@@ -1,66 +1,58 @@
 import java.util.Random;
-import java.util.EnumMap;
 
-enum dataSets{ A, B, C, D, E }
-
-public class SortTestDataSet {
+public class SortTestDataSet extends DataSetConstants{
 		
-	public EnumMap<dataSets, Integer[]> d = new EnumMap<>(dataSets.class);
+	//public EnumMap<dataSets, Integer[]> d = new EnumMap<>(dataSets.class);
 	
-	private final int ASIZE = 100;		// 100 random numbers
-	private final int BSIZE = 1000;		// 1000 random numbers
-	private final int CSIZE = 10000;	// 10000 random numbers
-	private final int DSIZE = 10000;	// 10000 to 1 in desc order
-	private final int ESIZE = 10000;	// 1:9999 ; 2:10000 both step 2
+	public Integer[][] d = new Integer[NUMSETS][];
 	
 	public SortTestDataSet(){
 		allocateArrays();
 		Random randomGen = new Random();
 		for(int i=0; i<ASIZE; i++)
-			d.get(dataSets.A)[i] = randomGen.nextInt();
+			d[A][i] = randomGen.nextInt();
 		for(int i=0; i<BSIZE; i++)
-			d.get(dataSets.B)[i] = randomGen.nextInt();
+			d[B][i] = randomGen.nextInt();
 		for(int i=0; i<CSIZE; i++)
-			d.get(dataSets.C)[i] = randomGen.nextInt();
-		resetDE();
+			d[C][i] = randomGen.nextInt();
+		initDE();
 	}
 	
 	/* Useful for copying a set with the same random values
 	as opposed to using the same seed to call random several times*/
 	public SortTestDataSet(SortTestDataSet toBeCopied){
 		allocateArrays();
-		clone(toBeCopied);
+		copy(toBeCopied);
 	}
 	
 	private void allocateArrays(){
-		d.put(dataSets.A, new Integer[ASIZE]);	
-		d.put(dataSets.B, new Integer[BSIZE]);	
-		d.put(dataSets.C, new Integer[CSIZE]);	
-		d.put(dataSets.D, new Integer[DSIZE]);	
-		d.put(dataSets.E, new Integer[ESIZE]);	
+		d[A] = new Integer[ASIZE];	
+		d[B] = new Integer[BSIZE];	
+		d[C] = new Integer[CSIZE];	
+		d[D] = new Integer[DSIZE];	
+		d[E] = new Integer[ESIZE];	
 	}
 	
-	public void clone(SortTestDataSet toBeCopied)
+	public void copy(SortTestDataSet toBeCopied)
 	{
 		for(int i=0; i<ASIZE; i++)
-			d.get(dataSets.A)[i] = toBeCopied.d.get(dataSets.A)[i];
+			d[A][i] = toBeCopied.d[A][i];
 		for(int i=0; i<BSIZE; i++)
-			d.get(dataSets.B)[i] = toBeCopied.d.get(dataSets.B)[i];
+			d[B][i] = toBeCopied.d[B][i];
 		for(int i=0; i<CSIZE; i++)
-			d.get(dataSets.C)[i] = toBeCopied.d.get(dataSets.C)[i];
-		resetDE();
+			d[C][i] = toBeCopied.d[C][i];
+		initDE();
 	}
 	
-	private void resetDE(){
+	private void initDE(){
 		/* these two arrays will always be the same, 
 		set them up on allocation*/
 		for(int i=0; i < DSIZE; i++)
-			d.get(dataSets.D)[i] = (DSIZE - i);
-		
+			d[D][i] = (DSIZE - i);
 		for(int i=0; i < ESIZE/2; i++)
 		{
-			d.get(dataSets.E)[i] = 2*(i) + 1;
-			d.get(dataSets.E)[ESIZE-(i+1)] = 2*(i) + 2;
+			d[E][i] = 2*(i) + 1;
+			d[E][ESIZE-(i+1)] = 2*(i) + 2;
 		}
 	}
 

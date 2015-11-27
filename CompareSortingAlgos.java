@@ -1,54 +1,57 @@
-import java.util.EnumMap;
-
-public class CompareSortingAlgos {
+public class CompareSortingAlgos extends DataSetConstants{
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		
+		final int NUMSORTS = 5;
+		
 		SortTestDataSet dataSet = new SortTestDataSet();
 		
 		SortTestDataSet dataSetCopy = new SortTestDataSet(dataSet);
 		
-		EnumMap<dataSets, SortingCounter> selectSortCounter = new EnumMap<>(dataSets.class);
-		for(dataSets set : dataSets.values())
-			selectSortCounter.put(set,new SortingCounter());
-		EnumMap<dataSets, SortingCounter> insSortCounter = new EnumMap<>(dataSets.class);
-		for(dataSets set : dataSets.values())
-			insSortCounter.put(set,new SortingCounter());
-		EnumMap<dataSets, SortingCounter> heapSortCounter = new EnumMap<>(dataSets.class);
-		for(dataSets set : dataSets.values())
-			heapSortCounter.put(set,new SortingCounter());
-		EnumMap<dataSets, SortingCounter> mergeSortCounter = new EnumMap<>(dataSets.class);
-		for(dataSets set : dataSets.values())
-			mergeSortCounter.put(set,new SortingCounter());
-		EnumMap<dataSets, SortingCounter> qSortCounter = new EnumMap<>(dataSets.class);
-		for(dataSets set : dataSets.values())
-			qSortCounter.put(set,new SortingCounter());
+		SortingCounter[] insSortCounters = new SortingCounter[NUMSETS];
+		SortingCounter[] selectSortCounters = new SortingCounter[NUMSETS];
+		SortingCounter[] heapSortCounters = new SortingCounter[NUMSETS];
+		SortingCounter[] mergeSortCounters = new SortingCounter[NUMSETS];
+		SortingCounter[] qSortCounters = new SortingCounter[NUMSETS];
 		
-		for(dataSets set : dataSets.values())
-			SortingAlgorithms.insSort(dataSetCopy.d.get(set), insSortCounter.get(set));
-		dataSetCopy.clone(dataSet);
-		for(dataSets set : dataSets.values())
-			SortingAlgorithms.selectSort(dataSetCopy.d.get(set), selectSortCounter.get(set));
-		dataSetCopy.clone(dataSet);
-		for(dataSets set : dataSets.values())
-			SortingAlgorithms.heapSort(dataSetCopy.d.get(set), heapSortCounter.get(set));
-		dataSetCopy.clone(dataSet);
-		for(dataSets set : dataSets.values())
-			SortingAlgorithms.qSort(dataSetCopy.d.get(set), 0, dataSetCopy.d.get(set).length-1, 
-					qSortCounter.get(set));
-		dataSetCopy.clone(dataSet);
-		for(dataSets set : dataSets.values())
-			SortingAlgorithms.mergeSort(dataSetCopy.d.get(set), dataSet.d.get(set), 
-					0, dataSetCopy.d.get(set).length-1, mergeSortCounter.get(set));
+		for(int i = 0; i < NUMSETS; i++)
+		{
+			insSortCounters[i] = new SortingCounter();
+			selectSortCounters[i] =new SortingCounter();
+			heapSortCounters[i] =new SortingCounter();
+			mergeSortCounters[i] =new SortingCounter();
+			qSortCounters[i] =new SortingCounter();
+		}
+		
+		for(int i = 0; i < NUMSETS; i++){
+			SortingAlgorithms.insSort(dataSetCopy.d[i], insSortCounters[i]);
+		}
+		dataSetCopy.copy(dataSet);
+		for(int i = 0; i < NUMSETS; i++){
+			SortingAlgorithms.selectSort(dataSetCopy.d[i], selectSortCounters[i]);
+		}
+		dataSetCopy.copy(dataSet);
+		for(int i = 0; i < NUMSETS; i++){
+			SortingAlgorithms.heapSort(dataSetCopy.d[i], heapSortCounters[i]);
+		}
+		dataSetCopy.copy(dataSet);
+		for(int i = 0; i < NUMSETS; i++){
+			SortingAlgorithms.qSort(dataSetCopy.d[i], 0, dataSetCopy.d[i].length-1, qSortCounters[i]);
+		}
+		dataSetCopy.copy(dataSet);
+		for(int i = 0; i < NUMSETS; i++){
+			SortingAlgorithms.mergeSort(dataSetCopy.d[i], dataSet.d[i], 0, 
+					dataSetCopy.d[i].length-1, mergeSortCounters[i]);
+		}
 		
 		// nice formatting idea from 
 		// http://stackoverflow.com/questions/18672643/how-to-print-a-table-of-information-in-java
 		final Object[][] table = new String[6][];
 		table[0] = new String[]{"", "A", "B", "C", "D", "E"};
-		for(int i = 1; i < 6; i++)
+		for(int i = 1; i <= NUMSORTS; i++)
 			table[i] = new String[6];
 		table[1][0] = "Insert";
 		table[2][0] = "Select";
@@ -56,16 +59,13 @@ public class CompareSortingAlgos {
 		table[4][0] = "Merge";
 		table[5][0] = "Quick";
 		
-		int i = 0;
-		
-		for (dataSets set : dataSets.values())
+		for(int i = 0; i < NUMSETS; i++)
 		{
-			++i;
-			table[1][i] = insSortCounter.get(set).toString();
-			table[2][i] = selectSortCounter.get(set).toString();
-			table[3][i] = heapSortCounter.get(set).toString();
-			table[4][i] = mergeSortCounter.get(set).toString();
-			table[5][i] = qSortCounter.get(set).toString();
+			table[1][i+1] = insSortCounters[i].toString();
+			table[2][i+1] = selectSortCounters[i].toString();
+			table[3][i+1] = heapSortCounters[i].toString();
+			table[4][i+1] = mergeSortCounters[i].toString();
+			table[5][i+1] = qSortCounters[i].toString();
 		}
 		
 		for (final Object[] row : table) {
