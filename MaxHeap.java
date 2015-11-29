@@ -54,7 +54,7 @@ public class MaxHeap<E extends Comparable<? super E>> {
 	    count.s++;
 	    curr = parent(curr);
 	  }
-	count.c++;
+	if (curr != 0) count.c++;
 	}
 	/** Heapify contents of Heap */
 	public void buildheap(SortingCounter count)
@@ -65,12 +65,13 @@ public class MaxHeap<E extends Comparable<? super E>> {
 	  assert (pos >= 0) && (pos < n) : "Illegal heap position";
 	  while (!isLeaf(pos)) {
 	    int j = leftchild(pos);
+	    if (j<(n-1)) count.c++;
 	    if ((j<(n-1)) && (Heap[j].compareTo(Heap[j+1]) < 0)) 
 	      j++; // j is now index of child with greater value
 	    count.c++;
 	    if (Heap[pos].compareTo(Heap[j]) >= 0) return;
 	    DSutil.swap(Heap, pos, j);
-	    count.s++;
+	    if ( pos != j) count.s++;
 	    pos = j;  // Move down
 	  }
 	}
@@ -93,7 +94,7 @@ public class MaxHeap<E extends Comparable<? super E>> {
 	  {
 	    DSutil.swap(Heap, pos, --n); // Swap with last value
 	    // If we just swapped in a big value, push it up
-	    count.c++;
+	    count.s++;
 	    while ((pos > 0) &&
 	           (Heap[pos].compareTo(Heap[parent(pos)]) > 0)) {
 	      count.c++;
@@ -101,7 +102,7 @@ public class MaxHeap<E extends Comparable<? super E>> {
 	      count.s++;
 	      pos = parent(pos);
 	    }
-	    count.c++;
+	    if (pos > 0) count.c++;
 	    if (n != 0) siftdown(pos, count); // If it is little, push down
 	  }
 	  return Heap[n];

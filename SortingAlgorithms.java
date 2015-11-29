@@ -1,3 +1,4 @@
+import java.util.Stack;
 
 public class SortingAlgorithms {
 	
@@ -25,7 +26,7 @@ public class SortingAlgorithms {
 				if (A[j].compareTo(A[lowindex]) < 0)
 						lowindex = j; // Put it in place
 			}
-			count.s++;
+			if (i!=lowindex) count.s++;
 			DSutil.swap(A, i, lowindex);
 		}
 
@@ -56,46 +57,60 @@ public class SortingAlgorithms {
 		for (int curr=l; curr<=r; curr++) {
 			if (i1 == mid+1){ // Left sublist exhausted
 				A[curr] = temp[i2++];
-				count.s++;
+				//count.s++;
 			}
 			else if (i2 > r){ // Right sublist exhausted
 				A[curr] = temp[i1++];
-				count.s++;
+				//count.s++;
 			}
 			else if (temp[i1].compareTo(temp[i2])<0){ // Get smaller
-				A[curr] = temp[i1++];
 				count.c++;
+				A[curr] = temp[i1++];
 			}
-			else A[curr] = temp[i2++];
-			count.s++;
-			count.c++;
+			else{
+				A[curr] = temp[i2++];
+				count.c++;
+				count.s++;
+			}
 		}
 	}
 	
 	static <E extends Comparable<? super E>>
-	void qSort(E[] A, int i, int j, SortingCounter count) { // Quicksort
-		int pivotindex = findpivot(A, i, j); // Pick a pivot
-		DSutil.swap(A, pivotindex, j); // Stick pivot at end
-		count.s++;
-		// k will be the first position in the right subarray
-		int k = partition(A, i-1, j, A[j], count);
-		DSutil.swap(A, k, j); // Put pivot in place
-		count.s++;
-		if ((k-i) > 1) qSort(A, i, k-1, count); // Sort left partition
-		if ((j-k) > 1) qSort(A, k+1, j, count); // Sort right partition
+	void qSort(E[] A, SortingCounter count) { // Quicksort
+		Stack<Integer> indexes = new Stack<>(); // recursive method gets overflow
+		indexes.push(0);
+		indexes.push(A.length-1);
+		while (!indexes.isEmpty()){
+			int j = indexes.pop();
+			int i = indexes.pop();
+			DSutil.swap(A, i, j); // Stick pivot at end, pivot is first element
+			count.s++;
+			int k = partition(A, i, j, A[j], count);
+			DSutil.swap(A, k, j); // Put pivot in place
+			count.s++;
+			if (k - i > 1){
+				indexes.push(i);
+				indexes.push(k-1);
+			}
+			if (j - k > 1){
+				indexes.push(k+1);
+				indexes.push(j);
+			}	
+		}
 	}
 	
-	static <E extends Comparable<? super E>>
+	/*static <E extends Comparable<? super E>>
 	int findpivot(E[] A, int i, int j)
-	{ return (i+j)/2; }
+	{ return i; }*/
 	
 	static <E extends Comparable<? super E>>
 	int partition(E[] A, int l, int r, E pivot, SortingCounter count) {
 		do { // Move bounds inward until they meet
-			while (A[++l].compareTo(pivot)<0){count.c++;};
+			while (A[++l].compareTo(pivot)<0) count.c++;
 			count.c++;
-			while ((r!=0) && (A[--r].compareTo(pivot)>0)){count.c++;};
-			count.c++;
+			while ((r!=0) && (A[--r].compareTo(pivot)>0)) count.c++;
+			if (r!=0) 
+				count.c++;
 			DSutil.swap(A, l, r); // Swap out-of-place values
 			count.s++;
 		} while (l < r); // Stop when they cross

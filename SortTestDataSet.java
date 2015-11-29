@@ -1,8 +1,6 @@
 import java.util.Random;
 
 public class SortTestDataSet extends DataSetConstants{
-		
-	//public EnumMap<dataSets, Integer[]> d = new EnumMap<>(dataSets.class);
 	
 	public Integer[][] d = new Integer[NUMSETS][];
 	

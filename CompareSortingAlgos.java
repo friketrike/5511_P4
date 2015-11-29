@@ -39,7 +39,7 @@ public class CompareSortingAlgos extends DataSetConstants{
 		}
 		dataSetCopy.copy(dataSet);
 		for(int i = 0; i < NUMSETS; i++){
-			SortingAlgorithms.qSort(dataSetCopy.d[i], 0, dataSetCopy.d[i].length-1, qSortCounters[i]);
+			SortingAlgorithms.qSort(dataSetCopy.d[i], qSortCounters[i]);
 		}
 		dataSetCopy.copy(dataSet);
 		for(int i = 0; i < NUMSETS; i++){
