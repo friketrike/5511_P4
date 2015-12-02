@@ -47,6 +47,7 @@ public class SortTestDataSet extends DataSetConstants{
 		set them up on allocation*/
 		for(int i=0; i < DSIZE; i++)
 			d[D][i] = (DSIZE - i);
+			//d[D][i] = (i); // For debugging purposes...
 		for(int i=0; i < ESIZE/2; i++)
 		{
 			d[E][i] = 2*(i) + 1;

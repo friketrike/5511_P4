@@ -49,27 +49,28 @@ public class CompareSortingAlgos extends DataSetConstants{
 		
 		// nice formatting idea from 
 		// http://stackoverflow.com/questions/18672643/how-to-print-a-table-of-information-in-java
-		final Object[][] table = new String[6][];
+		final Object[][] table = new String[7][];
 		table[0] = new String[]{"", "A", "B", "C", "D", "E"};
-		for(int i = 1; i <= NUMSORTS; i++)
+		table[1] = new String[]{"", "c/s", "c/s", "c/s", "c/s", "c/s"};
+		for(int i = 2; i < NUMSORTS+2; i++)
 			table[i] = new String[6];
-		table[1][0] = "Insert";
-		table[2][0] = "Select";
-		table[3][0] = "Heap";
-		table[4][0] = "Merge";
-		table[5][0] = "Quick";
+		table[2][0] = "Ins";
+		table[3][0] = "Sel";
+		table[4][0] = "Heap";
+		table[5][0] = "Mrge";
+		table[6][0] = "Quik";
 		
 		for(int i = 0; i < NUMSETS; i++)
 		{
-			table[1][i+1] = insSortCounters[i].toString();
-			table[2][i+1] = selectSortCounters[i].toString();
-			table[3][i+1] = heapSortCounters[i].toString();
-			table[4][i+1] = mergeSortCounters[i].toString();
-			table[5][i+1] = qSortCounters[i].toString();
+			table[2][i+1] = insSortCounters[i].toString();
+			table[3][i+1] = selectSortCounters[i].toString();
+			table[4][i+1] = heapSortCounters[i].toString();
+			table[5][i+1] = mergeSortCounters[i].toString();
+			table[6][i+1] = qSortCounters[i].toString();
 		}
 		
 		for (final Object[] row : table) {
-		    System.out.format("%-7s%-11s%-15s%-19s%-19s%-19s\n", row);
+		    System.out.format("%-5s%-11s%-15s%-19s%-19s%-19s\n", row);
 		}
 	}
 	
