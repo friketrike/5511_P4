@@ -49,28 +49,38 @@ public class CompareSortingAlgos extends DataSetConstants{
 		
 		// nice formatting idea from 
 		// http://stackoverflow.com/questions/18672643/how-to-print-a-table-of-information-in-java
-		final Object[][] table = new String[7][];
+		final Object[][] table = new String[12][];
 		table[0] = new String[]{"", "A", "B", "C", "D", "E"};
 		table[1] = new String[]{"", "c/s", "c/s", "c/s", "c/s", "c/s"};
-		for(int i = 2; i < NUMSORTS+2; i++)
+		for(int i = 2; i < 2*NUMSORTS+2; i++)
 			table[i] = new String[6];
 		table[2][0] = "Ins";
-		table[3][0] = "Sel";
-		table[4][0] = "Heap";
-		table[5][0] = "Mrge";
-		table[6][0] = "Quik";
+		table[3][0] = "";
+		table[4][0] = "Sel";
+		table[5][0] = "";
+		table[6][0] = "Heap";
+		table[7][0] = "";
+		table[8][0] = "Mrge";
+		table[9][0] = "";
+		table[10][0] = "Quik";
+		table[11][0] = "";
 		
 		for(int i = 0; i < NUMSETS; i++)
 		{
-			table[2][i+1] = insSortCounters[i].toString();
-			table[3][i+1] = selectSortCounters[i].toString();
-			table[4][i+1] = heapSortCounters[i].toString();
-			table[5][i+1] = mergeSortCounters[i].toString();
-			table[6][i+1] = qSortCounters[i].toString();
+			table[2][i+1] = insSortCounters[i].c.toString();
+			table[3][i+1] = insSortCounters[i].s.toString();
+			table[4][i+1] = selectSortCounters[i].c.toString();
+			table[5][i+1] = selectSortCounters[i].s.toString();
+			table[6][i+1] = heapSortCounters[i].c.toString();
+			table[7][i+1] = heapSortCounters[i].s.toString();
+			table[8][i+1] = mergeSortCounters[i].c.toString();
+			table[9][i+1] = mergeSortCounters[i].s.toString();
+			table[10][i+1] = qSortCounters[i].c.toString();
+			table[11][i+1] = qSortCounters[i].s.toString();
 		}
 		
 		for (final Object[] row : table) {
-		    System.out.format("%-5s%-11s%-15s%-19s%-19s%-19s\n", row);
+		    System.out.format("%-8s%-8s%-10s%-12s%-12s%-12s\n", row);
 		}
 	}
 	
