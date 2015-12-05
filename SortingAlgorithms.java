@@ -1,3 +1,11 @@
+/* COMP 5511 fall 2015 assignment 4 Programming part
+ * Federico O'Reilly Regueiro Student 	ID 40012304
+ * Collection of slightly modified sorting methods from :
+ * "A Practical Introduction to Data
+    Structures and Algorithm Analysis, 3rd Edition (Java)" 
+    by Clifford A. Shaffer
+    Copyright 2008-2011 by Clifford A. Shaffer */
+
 import java.util.Stack;
 
 public class SortingAlgorithms {
@@ -11,7 +19,8 @@ public class SortingAlgorithms {
 	      DSutil.swap(A, j, j-1);
 	      count.s++;
 	    }
-	    // we didn't break the loop because of j, so we did compare keys
+	    // make sure we didn't break the loop because of j, 
+	    // so we did compare keys without entering the loop
 	    if (temp > 0) count.c++;
 	  }
 	}
@@ -55,13 +64,12 @@ public class SortingAlgorithms {
 		// Do the merge operation back to A
 		int i1 = l; int i2 = mid + 1;
 		for (int curr=l; curr<=r; curr++) {
+			count.s++;
 			if (i1 == mid+1){ // Left sublist exhausted
 				A[curr] = temp[i2++];
-				//count.s++;
 			}
 			else if (i2 > r){ // Right sublist exhausted
 				A[curr] = temp[i1++];
-				//count.s++;
 			}
 			else if (temp[i1].compareTo(temp[i2])<0){ // Get smaller
 				count.c++;
@@ -69,15 +77,17 @@ public class SortingAlgorithms {
 			}
 			else{
 				A[curr] = temp[i2++];
-				count.c++;
-				count.s++;
+				count.c++; // we compared in the previous block without entering
 			}
 		}
+		count.s /= 3; // for merge, suppose 3 assigns = 1 swap
 	}
 	
 	static <E extends Comparable<? super E>>
 	void qSort(E[] A, SortingCounter count) { // Quicksort
-		Stack<Integer> indexes = new Stack<>(); // recursive method gets overflow
+		// I'm using a very old machine and openJDK, recursive method gets overflow 
+		// turn it into non-recursive
+		Stack<Integer> indexes = new Stack<>();  
 		indexes.push(0);
 		indexes.push(A.length-1);
 		while (!indexes.isEmpty()){
@@ -98,10 +108,6 @@ public class SortingAlgorithms {
 			}	
 		}
 	}
-	
-	/*static <E extends Comparable<? super E>>
-	int findpivot(E[] A, int i, int j)
-	{ return i; }*/
 	
 	static <E extends Comparable<? super E>>
 	int partition(E[] A, int l, int r, E pivot, SortingCounter count) {

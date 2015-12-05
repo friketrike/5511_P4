@@ -1,3 +1,8 @@
+/* COMP 5511 fall 2015 assignment 4 Programming part
+ * Federico O'Reilly Regueiro Student 	ID 40012304
+ * Generates the specified data set for the assignment
+ * and also has a copy-constructor.
+ */
 import java.util.Random;
 
 public class SortTestDataSet extends DataSetConstants{

@@ -1,8 +1,9 @@
+/* COMP 5511 fall 2015 assignment 4 Programming part
+ * Federico O'Reilly Regueiro Student 	ID 40012304
+ * Driver for comparing sorting algorithms counts and
+ * swaps*/
 public class CompareSortingAlgos extends DataSetConstants{
 
-	/**
-	 * @param args
-	 */
 	public static void main(String[] args) {
 		
 		final int NUMSORTS = 5;
