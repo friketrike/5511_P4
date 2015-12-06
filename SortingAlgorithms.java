@@ -20,7 +20,7 @@ public class SortingAlgorithms {
 	      count.s++;
 	    }
 	    // make sure we didn't break the loop because of j, 
-	    // so we did compare keys without entering the loop
+	    // if so, we compared keys without entering the loop
 	    if (temp > 0) count.c++;
 	  }
 	}
@@ -35,7 +35,7 @@ public class SortingAlgorithms {
 				if (A[j].compareTo(A[lowindex]) < 0)
 						lowindex = j; // Put it in place
 			}
-			if (i!=lowindex) count.s++;
+			count.s++; 
 			DSutil.swap(A, i, lowindex);
 		}
 
@@ -51,7 +51,6 @@ public class SortingAlgorithms {
 	}
 	
 	static <E extends Comparable<? super E>>
-
 	void mergeSort(E[] A, E[] temp, int l, int r, SortingCounter count) {
 		int mid = (l+r)/2; // Select midpoint
 		if (l == r) return; // List has one element
@@ -64,7 +63,7 @@ public class SortingAlgorithms {
 		// Do the merge operation back to A
 		int i1 = l; int i2 = mid + 1;
 		for (int curr=l; curr<=r; curr++) {
-			count.s++;
+			count.s++; // at some point we'll inevitably assign in the block
 			if (i1 == mid+1){ // Left sublist exhausted
 				A[curr] = temp[i2++];
 			}
@@ -72,37 +71,37 @@ public class SortingAlgorithms {
 				A[curr] = temp[i1++];
 			}
 			else if (temp[i1].compareTo(temp[i2])<0){ // Get smaller
-				count.c++;
 				A[curr] = temp[i1++];
+				count.c++;
 			}
 			else{
 				A[curr] = temp[i2++];
 				count.c++; // we compared in the previous block without entering
 			}
 		}
-		count.s /= 3; // for merge, suppose 3 assigns = 1 swap
 	}
 	
 	static <E extends Comparable<? super E>>
 	void qSort(E[] A, SortingCounter count) { // Quicksort
 		// I'm using a very old machine and openJDK, recursive method gets overflow 
-		// turn it into non-recursive
+		// with large enough datasets I moded it to turn it into non-recursive
 		Stack<Integer> indexes = new Stack<>();  
 		indexes.push(0);
 		indexes.push(A.length-1);
 		while (!indexes.isEmpty()){
 			int j = indexes.pop();
 			int i = indexes.pop();
-			DSutil.swap(A, i, j); // Stick pivot at end, pivot is first element
+			int pivot = (i+j)/2;
+			DSutil.swap(A, pivot, j); // Stick pivot at end, pivot is first element
 			count.s++;
-			int k = partition(A, i, j, A[j], count);
+			int k = partition(A, i-1, j, A[j], count);
 			DSutil.swap(A, k, j); // Put pivot in place
 			count.s++;
-			if (k - i > 1){
+			if ((k-i) > 1){
 				indexes.push(i);
 				indexes.push(k-1);
 			}
-			if (j - k > 1){
+			if ((j-k) > 1){
 				indexes.push(k+1);
 				indexes.push(j);
 			}	
@@ -113,10 +112,9 @@ public class SortingAlgorithms {
 	int partition(E[] A, int l, int r, E pivot, SortingCounter count) {
 		do { // Move bounds inward until they meet
 			while (A[++l].compareTo(pivot)<0) count.c++;
-			count.c++;
+			count.c++; // include the compare that broke the loop
 			while ((r!=0) && (A[--r].compareTo(pivot)>0)) count.c++;
-			if (r!=0) 
-				count.c++;
+			if (r!=0) count.c++; // again an extra compare if first cond == true
 			DSutil.swap(A, l, r); // Swap out-of-place values
 			count.s++;
 		} while (l < r); // Stop when they cross
@@ -124,6 +122,4 @@ public class SortingAlgorithms {
 		count.s++;
 		return l; // Return first position in right partition
 	}
-	
-
 }

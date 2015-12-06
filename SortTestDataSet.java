@@ -56,7 +56,7 @@ public class SortTestDataSet extends DataSetConstants{
 		for(int i=0; i < ESIZE/2; i++)
 		{
 			d[E][i] = 2*(i) + 1;
-			d[E][ESIZE-(i+1)] = 2*(i) + 2;
+			d[E][ESIZE-(i+1)] = ESIZE-(2*i);
 		}
 	}
 

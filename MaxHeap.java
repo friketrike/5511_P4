@@ -74,7 +74,7 @@ public class MaxHeap<E extends Comparable<? super E>> {
 	    count.c++;
 	    if (Heap[pos].compareTo(Heap[j]) >= 0) return;
 	    DSutil.swap(Heap, pos, j);
-	    if ( pos != j) count.s++;
+	    count.s++; 
 	    pos = j;  // Move down
 	  }
 	}

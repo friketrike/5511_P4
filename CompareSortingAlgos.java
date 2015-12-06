@@ -46,6 +46,7 @@ public class CompareSortingAlgos extends DataSetConstants{
 		for(int i = 0; i < NUMSETS; i++){
 			SortingAlgorithms.mergeSort(dataSetCopy.d[i], dataSet.d[i], 0, 
 					dataSetCopy.d[i].length-1, mergeSortCounters[i]);
+			mergeSortCounters[i].s /= 3;// for merge, suppose 3 assigns = 1 swap
 		}
 		
 		// nice formatting idea from 
